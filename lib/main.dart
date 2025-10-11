@@ -4,7 +4,8 @@ import 'package:toastification/toastification.dart';
 
 import 'router.dart';
 import 'providers.dart';
-import '../providers/theme_provider.dart';
+import 'providers/theme_provider.dart';
+import 'providers/shared_preferences_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,19 +22,17 @@ class MyApp extends StatelessWidget {
         maxToastLimit: 1,
       ),
       child: MultiProvider(
-        providers: [
-          ...providers,
-          ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ],
-        child: Consumer<ThemeProvider>(
-          builder: (context, themeProvider, child) {
+        providers: providers,
+        child: Consumer2<SharedPreferencesProvider, ThemeProvider>(
+          builder: (context, sharedPreferencesProvider, themeProvider, child) {
+            sharedPreferencesProvider.loadSettings();
             return MaterialApp.router(
               title: 'Nourish App',
-              themeMode: themeProvider.themeMode, // Use the persisted themeMode
-              theme: ThemeData.light().copyWith( // Define light theme
+              themeMode: themeProvider.themeMode,
+              theme: ThemeData.light().copyWith(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               ),
-              darkTheme: ThemeData.dark().copyWith( // Define dark theme
+              darkTheme: ThemeData.dark().copyWith(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               ),
               routerConfig: router,
