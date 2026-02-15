@@ -34,11 +34,11 @@ class ThemeProvider extends ChangeNotifier {
   Future<void> setThemeMode(ThemeMode mode) async {
     if (_themeMode == mode) return;
     _themeMode = mode;
-    notifyListeners();
 
     final sp = _sp;
     if (sp != null) {
       await sp.setDarkMode(mode == ThemeMode.dark);
     }
+    notifyListeners();
   }
 }
