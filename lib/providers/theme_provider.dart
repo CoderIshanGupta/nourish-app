@@ -20,10 +20,10 @@ class ThemeProvider extends ChangeNotifier {
     final modeFromPrefs = sp.isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
     if (!_syncedOnce || modeFromPrefs != _themeMode) {
-      _syncedOnce = true;
       _themeMode = modeFromPrefs;
       notifyListeners();
     }
+    _syncedOnce = true;
   }
 
   Future<void> toggleTheme() async {
