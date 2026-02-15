@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               ),
 
               // Optional language binding (expand when you localize)
-              locale: Locale(sp.preferredLanguage),
+              locale: Locale(['en'].contains(sp.preferredLanguage) ? sp.preferredLanguage : 'en'),
               supportedLocales: const [Locale('en')],
 
               routerConfig: router,
