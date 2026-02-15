@@ -8,7 +8,13 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeMode get themeMode => _themeMode;
 
-  // Called by ProxyProvider to connect to SharedPreferencesProvider
+  /// Integrates this provider with [SharedPreferencesProvider].
+  ///
+  /// This method is invoked by [ChangeNotifierProxyProvider] whenever the
+  /// [SharedPreferencesProvider] instance changes. It connects this
+  /// [ThemeProvider] to the shared preferences provider, synchronizes the
+  /// theme mode with the value stored in shared preferences, and notifies
+  /// listeners if the theme mode changes.
   void attach(SharedPreferencesProvider sp) {
     _sp = sp;
     final modeFromPrefs = sp.isDarkMode ? ThemeMode.dark : ThemeMode.light;
