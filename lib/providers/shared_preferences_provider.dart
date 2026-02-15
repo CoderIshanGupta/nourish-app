@@ -40,10 +40,12 @@ class SharedPreferencesProvider extends ChangeNotifier {
   }
 
   Future<void> setDarkMode(bool value) async {
-    _isDarkMode = value;
     final prefs = _prefs ??= await SharedPreferences.getInstance();
-    await prefs.setBool(_kIsDarkMode, value);
-    notifyListeners();
+    final success = await prefs.setBool(_kIsDarkMode, value);
+    if (success) {
+      _isDarkMode = value;
+      notifyListeners();
+    }
   }
 
   Future<void> toggleDarkMode() => setDarkMode(!_isDarkMode);
