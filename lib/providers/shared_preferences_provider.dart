@@ -57,11 +57,16 @@ class SharedPreferencesProvider extends ChangeNotifier {
 
   Future<void> reset() async {
     final prefs = _prefs ??= await SharedPreferences.getInstance();
-    await prefs.remove(_kIsDarkMode);
-    await prefs.remove(_kPreferredLanguage);
+    final darkModeRemoved = await prefs.remove(_kIsDarkMode);
+    final languageRemoved = await prefs.remove(_kPreferredLanguage);
 
-    _isDarkMode = false;
-    _preferredLanguage = 'en';
-    notifyListeners();
+    if (darkModeRemoved && languageRemoved) {
+      _isDarkMode = false;
+      _preferredLanguage = 'en';
+      notifyListeners();
+    } else {
+      // Optionally handle the error, e.g., log or throw
+      // debugPrint('Failed to reset SharedPreferences');
+    }
   }
 }
